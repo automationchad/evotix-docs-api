@@ -7,7 +7,7 @@ import { SupabaseHybridSearch } from '@langchain/community/retrievers/supabase';
 import { createClient } from '@supabase/supabase-js';
 import { config } from 'dotenv';
 
-const vector = true;
+const vector = false;
 
 config();
 
@@ -59,8 +59,8 @@ const initResources = async () => {
 
 		const retriever = vector ? vectorStore.asRetriever() : new SupabaseHybridSearch(embeddings, {
 			client: supabase,
-			similarityK: 2,
-			keywordK: 2,
+			similarityK: 1,
+			keywordK: 1,
 			tableName: 'documents',
 			similarityQueryName: 'match_documents',
 			keywordQueryName: 'kw_match_documents',
