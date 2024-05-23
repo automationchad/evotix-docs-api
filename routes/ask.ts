@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { RetrievalQAWithSourcesChain } from 'langchain/chains';
+import { ConversationalRetrievalQAChain } from 'langchain/chains';
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { OpenAI } from '@langchain/openai';
 import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase';
