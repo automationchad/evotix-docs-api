@@ -56,7 +56,7 @@ const initResources = async () => {
 
 		const retriever = vectorStore.asRetriever();
 
-		chain = RetrievalQAWithSourcesChain.fromLLM(slowerModel, retriever, {
+		chain = ConversationalRetrievalQAChain.fromLLM(slowerModel, retriever, {
 			returnSourceDocuments: true,
 			questionGeneratorChainOptions: {
 				template: PROMPT_TEMPLATE,
