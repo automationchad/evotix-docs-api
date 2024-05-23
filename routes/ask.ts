@@ -8,7 +8,7 @@ import { config } from 'dotenv';
 
 config();
 
-const app = new Hono();
+const ask = new Hono();
 
 const supabase = createClient(
 	process.env.SUPABASE_URL,
@@ -66,7 +66,7 @@ const initResources = async () => {
 	}
 };
 
-app.get('/ask', async (c) => {
+ask.get('/', async (c) => {
 	try {
 		await initResources();
 		const question = c.req.query('question');
@@ -88,4 +88,4 @@ app.get('/ask', async (c) => {
 	}
 });
 
-export default app;
+export default ask;
