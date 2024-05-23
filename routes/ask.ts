@@ -7,6 +7,8 @@ import { SupabaseHybridSearch } from '@langchain/community/retrievers/supabase';
 import { createClient } from '@supabase/supabase-js';
 import { config } from 'dotenv';
 
+const vector = true;
+
 config();
 
 const ask = new Hono();
@@ -55,7 +57,7 @@ const initResources = async () => {
 			temperature: 0.1,
 		});
 
-		const retriever = new SupabaseHybridSearch(embeddings, {
+		const retriever = vector ? vectorStore.asRetriever() : new SupabaseHybridSearch(embeddings, {
 			client: supabase,
 			similarityK: 2,
 			keywordK: 2,
