@@ -7,7 +7,7 @@ import { SupabaseHybridSearch } from '@langchain/community/retrievers/supabase';
 import { createClient } from '@supabase/supabase-js';
 import { config } from 'dotenv';
 
-const vector = false;
+const vector = true;
 
 config();
 
