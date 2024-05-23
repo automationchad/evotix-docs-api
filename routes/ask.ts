@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { ConversationalRetrievalQAChain } from 'langchain/chains';
+import { RetrievalQAWithSourcesChain } from 'langchain/chains';
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { OpenAI } from '@langchain/openai';
 import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase';
@@ -56,7 +56,7 @@ const initResources = async () => {
 
 		const retriever = vectorStore.asRetriever();
 
-		chain = ConversationalRetrievalQAChain.fromLLM(slowerModel, retriever, {
+		chain = RetrievalQAWithSourcesChain.fromLLM(slowerModel, retriever, {
 			returnSourceDocuments: true,
 			questionGeneratorChainOptions: {
 				template: PROMPT_TEMPLATE,
@@ -81,7 +81,11 @@ ask.get('/', async (c) => {
 			chat_history: [],
 		});
 
-		return c.json({ answer: res.text });
+		if (res.text === "I don't know.") {
+			return c.json({ answer: null }, 200);
+		}
+
+		return c.json({ answer: res.text }, 200);
 	} catch (error) {
 		console.error(error);
 		return c.json({ error: 'Internal Server Error' }, 500);
