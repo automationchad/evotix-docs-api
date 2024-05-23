@@ -36,11 +36,13 @@ const verifyToken = async (c: Context, next: Next) => {
 	await next();
 };
 
-app.use('/*', verifyToken);
+app.use('/ask', verifyToken);
 
-// app.get('/', (c) => {
-// 	return c.json({ message: 'Hello World' });
-// });
+app.get('/', (c) => {
+	return c.json({
+		message: `Welcome to the Evotix Documentation API! Integrate seamlessly with our platform. For detailed instructions, examples, and best practices, refer to the documentation. Happy coding! Made by William Marzella 2024`,
+	});
+});
 
 app.route('/ask', ask);
 
