@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "bun run --watch index.ts"
+    "dev": "bun run --watch index.ts",
+    "start": "bun run --watch index.ts"
   },
   "dependencies": {
     "@langchain/community": "^0.2.1",
