@@ -81,7 +81,7 @@ ask.get('/', async (c) => {
 			chat_history: [],
 		});
 
-		if (res.text === "I don't know.") {
+		if (res.text.includes("I don't know.")) {
 			return c.json({ answer: null }, 200);
 		}
 
