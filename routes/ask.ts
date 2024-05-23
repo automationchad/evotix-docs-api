@@ -3,6 +3,7 @@ import { ConversationalRetrievalQAChain } from 'langchain/chains';
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { OpenAI } from '@langchain/openai';
 import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase';
+import { SupabaseHybridSearch } from '@langchain/community/retrievers/supabase';
 import { createClient } from '@supabase/supabase-js';
 import { config } from 'dotenv';
 
@@ -54,7 +55,14 @@ const initResources = async () => {
 			temperature: 0.1,
 		});
 
-		const retriever = vectorStore.asRetriever();
+		const retriever = new SupabaseHybridSearch(embeddings, {
+			client: supabase,
+			similarityK: 2,
+			keywordK: 2,
+			tableName: 'documents',
+			similarityQueryName: 'match_documents',
+			keywordQueryName: 'kw_match_documents',
+		});
 
 		chain = ConversationalRetrievalQAChain.fromLLM(slowerModel, retriever, {
 			returnSourceDocuments: true,
